@@ -1,0 +1,47 @@
+<div class="col-md-6">
+  <h2 class="text-center">Add Persona</h2>
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <input type="hidden" formControlName="id" name="id" class="form-control" id="id"
+            [(ngModel)]="persona.id">
+
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input formControlName="nombre" placeholder="Nombre" name="nombre" class="form-control" 
+      id="nombre" [(ngModel)]="persona.nombre" required minlength="4">
+      <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
+        <div *ngIf="f.nombre.errors.required">Nombre es requerido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="apellido">Apellido:</label>
+      <input formControlName="apellido" placeholder="Apellido" name="apellido" 
+      class="form-control" id="apellido" [(ngModel)]="persona.apellido" required>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaNacimiento">Fecha de nacimiento:</label>
+      <input type="date" formControlName="fechaNacimiento" placeholder="FechaNacimiento" 
+      name="fechaNacimiento" class="form-control" id="fechaNacimiento" [(ngModel)]="persona.fechaNacimiento" required>
+    </div>
+
+    <div class="form-group">
+      <label for="tipoDocumento">Tipo de Documento:</label>
+      <select formControlName="tipoDocumento">
+        <option [value]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos"> {{tipoDocumento}}</option>
+      </select>
+    </div>
+
+    
+
+    <div class="form-group">
+      <label for="nroDocumento">Nro documento:</label>
+      <input formControlName="nroDocumento" placeholder="NroDocumento" name="nroDocumento" 
+      class="form-control" id="nroDocumento" [(ngModel)]="persona.nroDocumento" required>
+    </div>
+
+    <button class="btn btn-success" *ngIf="persona.id != null" [disabled]="loading">Actualizar</button>
+    <button class="btn btn-success" *ngIf="persona.id === null" [disabled]="loading">Guardar</button>
+    <button class="btn btn-success">Cancelar</button>
+  </form>
+</div>

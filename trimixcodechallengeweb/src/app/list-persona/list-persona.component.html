@@ -1,0 +1,73 @@
+<div class="col-md-6">
+  <h2 class="text-center">Filtros</h2>
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input formControlName="nombre" placeholder="Nombre" name="nombre" class="form-control" id="nombre">
+    </div>
+
+    <div class="form-group">
+      <label for="tipoDocumento">Tipo de Documento:</label>
+      <select formControlName="tipoDocumento">
+        <option [value]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos"> {{tipoDocumento}}</option>
+      </select>
+    </div>
+
+    <button class="btn btn-success">Buscar</button>
+    
+  </form>
+  <button class="btn btn-success" (click)="limpiarFiltro()">Limipar Filtro</button>
+</div>
+<mat-card>
+  <mat-card-title>Personas</mat-card-title>
+  <mat-card-content>
+    <button mat-fab color="primary" [routerLink]="['/add-persona']">+</button>
+    <br />
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+    </mat-form-field>
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="apellido">
+        <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.apellido}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="fechaNacimiento">
+        <mat-header-cell *matHeaderCellDef> Fecha de Nacimiento </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaNacimiento}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="tipoDocumento">
+        <mat-header-cell *matHeaderCellDef> Tipo de Documento </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipoDocumento}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nroDocumento">
+        <mat-header-cell *matHeaderCellDef> Nro. de Documento </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nroDocumento}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button md-raised-button [routerLink]="['/add-persona', element.id]">Edit</button>
+          <button md-raised-button (click)="deletePersona(element.id)">Delete</button>
+        </mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="2" [pageSizeOptions]="[2, 4, 6, 10, 20]">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+
