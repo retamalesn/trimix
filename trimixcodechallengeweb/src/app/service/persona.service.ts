@@ -5,7 +5,7 @@ import {Persona} from "../model/persona.model";
 @Injectable()
 export class PersonaService {
     constructor(private http: HttpClient) {}
-    baseUrl: string = 'http://localhost:8081/trimixcodechallenge/rest/persona';
+    baseUrl: string = 'http://localhost:8383/trimixcodechallenge/rest/persona';
 
     getPersonas() {
         return this.http.get<Persona[]>(this.baseUrl + '/list');
